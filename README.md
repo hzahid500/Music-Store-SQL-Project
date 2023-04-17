@@ -1,5 +1,5 @@
 # Music Store SQL Project
-### This repository includes a sql querying file that answer a few questions about the underlying dataset. The dataset includes multiple files like album, artist, customer, employee, genre tables and much more. All dataset files are located within the repository as well.
+#### This repository includes a sql querying file that answer a few questions about the underlying dataset. The dataset includes multiple files like album, artist, customer, employee, genre tables and much more. All dataset files are located within the repository as well.
 
 ![istockphoto-1278953137-170667a](https://user-images.githubusercontent.com/121971294/232415783-e7afa738-0c3a-40ad-af8e-e276e79f710b.jpg)
 
