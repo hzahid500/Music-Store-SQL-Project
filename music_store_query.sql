@@ -242,9 +242,8 @@ WITH employee_with_age_table AS
   employee_id, CONCAT(first_name, " ", last_name) AS full_name, 
   DATE_DIFF(DATE(hire_date), DATE(birthdate), year) AS employee_age,
   title, birthdate,
-  hire_date, state, country,
-  
-FROM
+  hire_date, state, country
+  FROM
   `music_store.employee`)
 SELECT
   title, 
@@ -254,12 +253,3 @@ FROM
 GROUP BY
   title
 ORDER BY average_employee_age DESC
-
-
-
-
-
-
-
-
-
