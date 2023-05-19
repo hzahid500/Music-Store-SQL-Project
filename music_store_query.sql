@@ -211,12 +211,49 @@ ON cc.billing_country = ms.billing_country
 WHERE cc.total_spending = ms.max_spending
 ORDER BY 1;
 
+-- What is the monthly invoice quantity?
 
+WITH joined_music_store AS
+(SELECT 
+  cu.customer_id, cu.first_name, cu.last_name, cu.company, cu.city, cu.state, cu.country,
+  inv.invoice_date, inv.billing_city, inv.billing_state, inv.billing_country, inv.total,
+  ivl.track_id, ivl.unit_price, ivl.quantity,
+  tr.track_id, tr.name, tr.composer, tr.milliseconds, tr.bytes, tr.unit_price,
+  al.title, ar.name as artist_name
+FROM `music_store.customer` cu
+JOIN `music_store.invoice` inv ON cu.customer_id = inv.customer_id
+JOIN `music_store.invoice_line` ivl ON inv.invoice_id = ivl.invoice_id
+JOIN `music_store.track` tr ON tr.track_id = ivl.track_id
+JOIN `music_store.album` al ON tr.album_id = al.album_id
+JOIN `music_store.artist` ar ON al.artist_id = ar.artist_id)
+SELECT 
+  EXTRACT(MONTH FROM invoice_date) as extracted_month,
+  SUM(quantity) AS monthly_quantity
+FROM
+  joined_music_store
+GROUP BY
+  extracted_month
+ORDER BY monthly_quantity DESC 
 
+-- What is the average age for employees by job title?
 
-
-
-
+WITH employee_with_age_table AS
+(SELECT 
+  employee_id, CONCAT(first_name, " ", last_name) AS full_name, 
+  DATE_DIFF(DATE(hire_date), DATE(birthdate), year) AS employee_age,
+  title, birthdate,
+  hire_date, state, country,
+  
+FROM
+  `music_store.employee`)
+SELECT
+  title, 
+  ROUND(AVG(employee_with_age_table.employee_age),2) AS average_employee_age
+FROM
+  employee_with_age_table
+GROUP BY
+  title
+ORDER BY average_employee_age DESC
 
 
 
